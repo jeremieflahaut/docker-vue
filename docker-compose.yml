@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  vue:
+    container_name: ${COMPOSE_PROJECT_NAME}_vue
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
+    environment: 
+      - APP_ENV=${APP_ENV}
+    volumes:
+    - ./app:/app
+    labels:
+      - "traefik.enable=false"
+    ports:
+      - 3000:8080
+ 
+networks:
+  antibes:
+    external: true
+    name: antibes
